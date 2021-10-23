@@ -59,24 +59,25 @@ def Sortino(DF, rf):
 
 #%% Importing Monthly Data 
 
-tickers = ["ACC.BO", "AMBUJACEM.NS", "ASIANPAINT.NS", "AXISBANK.NS", "BAJAJ-AUTO.NS", "BANKBARODA.NS", "BHARTIARTL.NS", "BHEL.NS",
-           "BPCL.NS", "CIPLA.NS", "COALINDIA.NS", "DLF.NS", "DRREDDY.NS", "GAIL.NS", "GRASIM.NS", "HCLTECH.NS",
-           "HDFC.NS", "HDFCBANK.NS", "HEROMOTOCO.NS", "HINDALCO.NS", "HINDUNILVR.NS", "ICICIBANK.NS", "IDFC.NS", 
-           "INDUSINDBK.NS", "INFY.NS", "ITC.NS", "JINDALSTEL.NS", "KOTAKBANK.NS", "LT.NS", "LUPIN.NS", "M&M.NS", "MARUTI.NS", "NMDC.NS", 
+tickers = ["ACC.BO", "ADANIPORTS.NS", "AMBUJACEM.NS", "ASIANPAINT.NS", "AXISBANK.NS", "BAJAJ-AUTO.NS", "BANKBARODA.NS", "BHARTIARTL.NS", "BHEL.NS", "BOSCHLTD.NS", 
+           "BPCL.NS", "CIPLA.NS", "COALINDIA.NS", "DRREDDY.NS", "GAIL.NS", "GRASIM.NS", "HCLTECH.NS",
+           "HDFC.NS", "HDFCBANK.NS", "HEROMOTOCO.NS", "HINDALCO.NS", "HINDUNILVR.NS", "ICICIBANK.NS", "IDEA.NS", 
+           "INDUSINDBK.NS", "INFY.NS", "ITC.NS", "KOTAKBANK.NS", "LT.NS", "LUPIN.NS", "M&M.NS", "MARUTI.NS", 
            "NTPC.NS", "ONGC.NS", "PNB.NS", "POWERGRID.NS", "RELIANCE.NS", "SBIN.NS", "SUNPHARMA.NS", "TATAMOTORS.NS", "TATAPOWER.NS", 
-           "TATASTEEL.NS", "TCS.NS", "ULTRACEMCO.NS", "WIPRO.NS"]   
+           "TATASTEEL.NS", "TCS.NS", "TECHM.NS", "ULTRACEMCO.NS", "VEDL.NS", "WIPRO.NS", "YESBANK.NS", "ZEEL.NS"]   
 
 ohlc_data = {}
 
 start = dt.date.fromisoformat('2016-02-01')
-end = dt.datetime.today()                     
+end = dt.date.fromisoformat('2021-10-01')                     
 
 
 for ticker in tickers:
     print("Downloading data for ", ticker + '\n')
     ohlc_data[ticker] = yf.download(ticker, start, end, interval="1mo")
     ohlc_data[ticker].bfill(inplace=True)
-
+    
+#dropna(inplace=True, how="all")
 
 tickers = ohlc_data.keys()
 
@@ -135,8 +136,8 @@ def stratRebalancing(DF, n, x):
     
 
 #%% Computing Strategy Performance 
-n = 10
-x = 3
+n = 30
+x = 20
 strat_DF = pd.DataFrame()
 strat_DF = stratRebalancing(returns_DF, n, x)
 CAGR(strat_DF)
