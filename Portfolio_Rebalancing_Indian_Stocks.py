@@ -136,8 +136,8 @@ def stratRebalancing(DF, n, x):
     
 
 #%% Computing Strategy Performance 
-n = 25
-x = 5
+n = 40
+x = 2
 strat_DF = pd.DataFrame()
 strat_DF = stratRebalancing(returns_DF, n, x)
 CAGR(strat_DF)
