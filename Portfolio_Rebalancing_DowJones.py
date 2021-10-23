@@ -6,7 +6,7 @@
 # We can double down on the same stock if it continues to be a top performer for the next month also
 
 # The returns are then compared with a simple BUY & HOLD strategy of the Index
-# Selected Universe of Stocks -> NIFTY50 constituents as on Feb 1st, 2016
+# Selected Universe of Stocks -> Dow Jones Industrial Average (DJIA) constituents as on Feb 1st, 2016
 
 #%% Importing Libraries
 
@@ -59,12 +59,8 @@ def Sortino(DF, rf):
 
 #%% Importing Monthly Data 
 
-tickers = ["ACC.BO", "ADANIPORTS.NS", "AMBUJACEM.NS", "ASIANPAINT.NS", "AXISBANK.NS", "BAJAJ-AUTO.NS", "BANKBARODA.NS", "BHARTIARTL.NS", "BHEL.NS", "BOSCHLTD.NS", 
-           "BPCL.NS", "CIPLA.NS", "COALINDIA.NS", "DRREDDY.NS", "GAIL.NS", "GRASIM.NS", "HCLTECH.NS",
-           "HDFC.NS", "HDFCBANK.NS", "HEROMOTOCO.NS", "HINDALCO.NS", "HINDUNILVR.NS", "ICICIBANK.NS", "IDEA.NS", 
-           "INDUSINDBK.NS", "INFY.NS", "ITC.NS", "KOTAKBANK.NS", "LT.NS", "LUPIN.NS", "M&M.NS", "MARUTI.NS", 
-           "NTPC.NS", "ONGC.NS", "PNB.NS", "POWERGRID.NS", "RELIANCE.NS", "SBIN.NS", "SUNPHARMA.NS", "TATAMOTORS.NS", "TATAPOWER.NS", 
-           "TATASTEEL.NS", "TCS.NS", "TECHM.NS", "ULTRACEMCO.NS", "VEDL.NS", "WIPRO.NS", "YESBANK.NS", "ZEEL.NS"]   
+tickers = ["MMM","AAPL","AXP", "BA", "CAT", "CVX", "CSCO", "KO", "DD", "XOM", "GE", "GS", "HD", "INTC", "IBM",
+           "JPM", "JNJ", "MCD", "MRK", "MSFT", "NKE", "PFE", "PG", "TRV", "UNH", "VZ", "V", "WMT", "DIS"] 
 
 ohlc_data = {}
 
@@ -83,6 +79,7 @@ tickers = ohlc_data.keys()
 
 
 #%% Computing Monthly Returns 
+#ticker = "AAPL"
 
 ohlc_copy = copy.deepcopy(ohlc_data)
 returns_DF = pd.DataFrame()
@@ -96,16 +93,16 @@ returns_DF.dropna(inplace=True)
 
 #%% Computing Performance of a simple BUY & HOLD strategy of the Index (NIFTY50) for the same period
 
-index_ticker = "^NSEI"
-NIFTY = yf.download(index_ticker, start, end, interval="1mo")
-NIFTY["Monthly Returns"] = NIFTY["Adj Close"].pct_change()
+index_ticker = "^DJI"
+DJI = yf.download(index_ticker, start, end, interval="1mo")
+DJI["Monthly Returns"] = DJI["Adj Close"].pct_change()
 
-rf = 0.06 # Assumed Risk-Free rate for this period
+rf = 0.025 # Assumed Risk-Free rate for this period
 
-CAGR(NIFTY)
-Sharpe(NIFTY, rf)
-Sortino(NIFTY, rf)
-MaxDD(NIFTY)
+CAGR(DJI)
+Sharpe(DJI, rf)
+Sortino(DJI, rf)
+MaxDD(DJI)
 
 
 #%% Defining Proposed Portfolio Rebalancing Strategy 
@@ -136,8 +133,8 @@ def stratRebalancing(DF, n, x):
     
 
 #%% Computing Strategy Performance 
-n = 25
-x = 5
+n = 6
+x = 3
 strat_DF = pd.DataFrame()
 strat_DF = stratRebalancing(returns_DF, n, x)
 CAGR(strat_DF)
@@ -149,8 +146,8 @@ MaxDD(strat_DF)
 
 fig, ax = plt.subplots()
 plt.plot((1+strat_DF).cumprod())
-plt.plot((1+NIFTY["Monthly Returns"].reset_index(drop=True)).cumprod())
-plt.title("Index Return (NIFTY) vs Strategy Return")
+plt.plot((1+DJI["Monthly Returns"].reset_index(drop=True)).cumprod())
+plt.title("Index Return (DJIA) vs Strategy Return")
 plt.ylabel("Cumulative Return")
 plt.xlabel("Months")
 ax.legend(["Strategy Return","Index Return"])
