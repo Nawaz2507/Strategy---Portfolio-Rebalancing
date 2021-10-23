@@ -9,8 +9,7 @@ We can double down on the same stock if it continues to be a top performer for t
 The returns are then compared with a simple BUY & HOLD strategy of the Index
 Selected Universe of Stocks -> Dow Jones Industrial Average (DJIA) & NIFTY50 constituents as on Feb 1st, 2016
 
-The backtesting is done from Feb 1st 2016 to Oct 1st, 2021. The KPIs are lower than index KPIs when run for NIFTY (strategy underperforms undex) 
-& higher than index KPIs when run for DJIA (strategy outperforms index).
+The backtesting is done from Feb 1st 2016 to Oct 1st, 2021. The KPIs for the strategy are higher than KPIs of the index for both NIFTY50 & DJIA, i.e., the strategy outperforms the index in the given time frame for the selected set of parameters.
 
 Strategy Performance:
 
